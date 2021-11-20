@@ -1,6 +1,5 @@
-const BASE_URL = "https://posts-pw2021.herokuapp.com/api/v1";
 import axios from 'axios';
-
+const BASE_URL = "https://posts-pw2021.herokuapp.com/api/v1";
 const services = {};
 
 services.login = async (username, password) => {
