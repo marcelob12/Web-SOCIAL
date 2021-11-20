@@ -25,9 +25,11 @@ const Login = () => {
       }
 
     return (
-        <div>
+        <div className="flex  justify-center">
           <main>
-            <form onSubmit = { onSubmitHandler }>
+            <form 
+              className=" flex flex-col bg-blue-500 gap-10 p-10"
+              onSubmit = { onSubmitHandler }>
               <h1>Titulo</h1>
               <input 
                 title='Username'
@@ -44,9 +46,10 @@ const Login = () => {
                 onChange={(e) => onChange(e, setPassword)}
                 value={password}
                 />
-              <button className="pd-1">
-                Ingresar{" "}
+              <button className="p-1 bg-blue-100">
+                Ingresar
               </button>
+              
             </form>
           </main>
         </div>
