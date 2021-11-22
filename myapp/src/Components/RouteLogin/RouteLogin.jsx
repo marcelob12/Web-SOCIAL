@@ -1,7 +1,7 @@
 import { useUserContext } from './../../Contexts/UserContext';
 import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({role="user", children }) => {
+const RouteLogin = ({role, children }) => {
   const { token, user } = useUserContext();
   
   if(!token) return <Navigate replace to="/login"/>;
@@ -9,5 +9,4 @@ const PrivateRoute = ({role="user", children }) => {
 
   return children;
 }
-
-export default PrivateRoute;
+export default RouteLogin;
