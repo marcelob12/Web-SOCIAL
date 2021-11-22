@@ -1,5 +1,5 @@
-import React, {  useEffect, useCallback, useState, useMemo } from "react";
-import userService from './../Services/user.services';
+import React, { useCallback, useEffect, useState, useMemo } from "react"
+import userServices from "../Services/user.services"
 
 const UserContext = React.createContext();
 const TOKEN_KEY = "token";
@@ -8,44 +8,46 @@ export const UserProvider = (props) => {
     const [token, setToken] = useState(undefined);
     const [user, setUser] = useState(undefined);
 
-    useEffect(() => {
-        const verifyTokenAsync = async () => {
-            const lsToken = getToken();
-
-            if(lsToken) {
-                const { username, role } = await userService.verifyToken(lsToken);
-                if(username && role) {
-                    setUser({ username, role });
-                    setTokenAll(lsToken);
-                }
-            }
-        }
-
-        verifyTokenAsync();
-    }, [token])
-
-    const setTokenAll = (token) => {
+    const setTokenAll = token => {
         localStorage.setItem(TOKEN_KEY, token);
         setToken(token);
     }
 
-    const login = useCallback((username, password)=> {
+    useEffect(() => {
+        const verifyCurrentToken = async () => {
+            const tokenLS = localStorage.getItem(TOKEN_KEY);
+
+            if(tokenLS) {
+                const { username, role } = await userServices.verifyToken(tokenLS);
+
+                if(username && role) {
+                    setUser({ username, role });
+                    setTokenAll(tokenLS);
+                }
+            }
+        }
+        verifyCurrentToken();
+    }, [token])
+
+    const login = useCallback((username, password) => {
         const loginAsync = async () => {
             let status = false;
             try {
-                const { token: tokenRes } = await userService.login(username, password);
+                const { token: tokenResponse } = await userServices.login(username, password);
 
-                if(tokenRes) {
-                    setTokenAll(tokenRes);
+                if(tokenResponse) {
+                    setTokenAll(tokenResponse);
                     status = true;
                 }
-            } catch (error) {
-                console.error(error);
-                console.error("Error in login");
-            } finally {
+            }
+            catch (error) {
+                console.log(error);
+                console.log("No se pudo iniciar sesión");
+            }
+            finally {
                 return status;
             }
-        };
+        }
 
         return loginAsync();
     }, [])
@@ -55,24 +57,21 @@ export const UserProvider = (props) => {
         setTokenAll(undefined);
     }, [])
 
-    const value = useMemo(()=> ({
+    const value = useMemo(() => ({
         token: token,
         user: user,
         login: login,
         logout: logout
     }), [token, user, login, logout]);
 
-    return <UserContext.Provider value={value} {...props} />;
+    return <UserContext.Provider value = { value } {...props} />
 }
 
 export const useUserContext = () => {
     const context = React.useContext(UserContext);
 
-    if (!context) {
-        throw new Error("error");
+    if(!context) {
+        throw new Error("Ha ocurrido un error");
     }
-
     return context;
 }
-
-const getToken = () => localStorage.getItem(TOKEN_KEY);
