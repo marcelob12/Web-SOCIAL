@@ -1,6 +1,11 @@
 import React from 'react';
 import Login from './Pages/Login/Login';
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import CreatePost from './Pages/CreatePost/CreatePost';
+import  RouteLogin  from './Components/RouteLogin/RouteLogin';
+import Redirect from './Pages/Redirect/Redirect';
+import ErrorPage from './Pages/ErrorPage/ErrorPage';
+
 
 
 function App() {
@@ -9,7 +14,25 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate replace to={"/login"} />} />
         <Route path="/login" element={<Login />} />
-      </Routes>
+        <Route path="/Redirect" element={<Redirect />} />
+
+      <Route
+          path="/AdminMain"
+          element={
+            <RouteLogin role="admin">
+              <CreatePost />
+            </RouteLogin>
+          } />
+
+        <Route
+          path="/UserMain"
+          element={
+            <RouteLogin role="user">
+              <ErrorPage />
+            </RouteLogin>
+          } />
+
+          </Routes>
       </BrowserRouter>
     
   );
