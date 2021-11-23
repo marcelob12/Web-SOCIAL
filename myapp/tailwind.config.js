@@ -7,7 +7,10 @@ module.exports = {
       aqua: "#2CBC89",
       skyD: "#3A82F1",
       skyL: "#DBEAFF",
-      gray:"#bcbfc4",
+      gray:{
+        500: "#bcbfc4",
+        300: "#E8EDF0"
+      },      
       white:"#FFFFFF",
       whitie:"#F2F2F2",
       dark: {
