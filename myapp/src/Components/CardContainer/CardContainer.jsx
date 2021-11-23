@@ -10,7 +10,7 @@ const CardContainer = () => {
   useEffect(() => {
     const fetchPosts = async () =>{
       try {
-        const response = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/all?limit=30&page=0", {
+        const response = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/all?limit=50&page=0", {
           "method": "GET",
           "headers":{
             "Authorization": `Bearer ${token}`

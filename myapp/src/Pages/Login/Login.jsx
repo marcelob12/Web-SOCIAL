@@ -37,7 +37,7 @@ const Login = () => {
       <div className="flex items-center justify-center min-h-screen bg-dark-700">
         <main>
           <form 
-            className="flex flex-col gap-10 p-10 bg-gray w-96"
+            className="flex flex-col gap-10 p-10 bg-gray-500 w-96"
             onSubmit = { onSubmitHandler }>
             <h1>Logeate</h1>
             <input 
