@@ -2,8 +2,8 @@ import CardContainer from "../../Components/CardContainer/CardContainer";
 
 const UserMain = () => {
     <div>
-    <CardContainer />
- </div>
+        <CardContainer />
+    </div>
 
 }
 
