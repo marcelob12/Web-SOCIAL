@@ -1,24 +1,62 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../Contexts/UserContext";
+import React, {useState, useEffect} from 'react';
+import CardPost from '../../Components/CardPost/CardPost';
+import Navbar from '../../Components/Navbar/Navbar';
+
+const UserMain = () => {
+  const token = localStorage.getItem("token");
+  const [post, setPost] = useState([]);
 
 
-const ErrorPage = () => {  
-    const navigate = useNavigate();
-    const auth = useUserContext();
-    const onClickHandler = (e) =>{
-        e.preventDefault();
+  useEffect(() => {
+    const fetchPosts = async () =>{
+      try {
+        const response = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/all?limit=10&page=0", {
+          "method": "GET",
+          "headers":{
+            "Authorization": `Bearer ${token}`
+          }
+        });
+  
+        if(response.ok){
+          const data = await response.json();
+          setPost(data.data);
+        }
+  
+  
+      } catch (error) {
+        console.error(error);
+      }
+    };
     
-        auth.logout();
-        navigate("/login");
-    }
+    fetchPosts();
+  }, []);
+  
 
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <div className="flex justify-center">
+        <div className="mt-11 w-11/12">
 
-    return (
-        <button  onClick= {onClickHandler}  className="flex px-2 py-2 mx-3 mt-6 text-white transform bg-gray-700 rounded-full hover:scale-105 hover:text-gray-900 hover:bg-white motion-reduce:transform-none "> Volver </button>
+          {
+            post.length > 0?
+              post.map((p)=>{
+                return(
+                  <CardPost
+                    post={p}
+                    key={p._id}
+                  />
+                )
+              })
+              :
+              null
+          }
+        
+        </div>
+      </div>
+      
+    </div>
+  );
+}
 
-    );
-    
-}   
-
-export default ErrorPage;
+export default UserMain;
