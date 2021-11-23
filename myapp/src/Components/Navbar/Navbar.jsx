@@ -4,6 +4,7 @@ import { useUserContext } from '../../Contexts/UserContext';
 import { AiOutlineStar, AiFillCaretDown } from "react-icons/ai";
 import { MdPublic } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import {MdOutlineAddComment} from 'react-icons/md';
 
 
 const Navbar = () => {
@@ -46,33 +47,42 @@ const Navbar = () => {
         auth.logout();
         navigate("/login");
     }
+
+    const addPost = (e) =>{
+        e.preventDefault();
+        navigate("/CreatePost");
+    }
         
     return ( 
-        <div className="bg-gradient-to-r from-aqua to-skyD pt-1 relative">
-            <div id="divnav" className="flex items-center justify-around bg-dark-700 text-white h-14 shadow-lg static">
-                <h1 className="font-heading text-4xl lg:w-1/4 lg:text-center">Web social</h1>
+        <div className="relative pt-1 bg-gradient-to-r from-aqua to-skyD">
+            <div id="divnav" className="static flex items-center justify-around text-white shadow-lg bg-dark-700 h-14">
+                <h1 className="text-4xl font-heading lg:w-1/4 lg:text-center">Web social</h1>
                 
                 <div className="lg:hidden">
                     <button onClick={hamburgerBtn} className="flex items-center px-3 py-2 border rounded hover:text-white hover:border-white">
-                        <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                        <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
                     </button>
                 </div>
 
                 <nav className="hidden h-full lg:w-3/5 lg:flex lg:justify-end font-content text-gray">
-                    <button className="hover:bg-dark-400 hover:text-white flex items-center justify-center lg:w-1/4 gap-3 h-12 lg:h-auto"> <MdPublic /> Publicaciones</button>
-                    <button className="hover:bg-dark-400 hover:text-white flex items-center justify-center lg:w-1/4 gap-3 h-12 lg:h-auto"> <AiOutlineStar /> Favoritos</button>
-                    <button className="hover:bg-dark-400 hover:text-white flex items-center justify-center lg:w-1/4 gap-3 h-12 lg:h-auto" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}> <img src={useravatar} className="h-8 w-8 rounded-full"/> Usuario <AiFillCaretDown /></button>
+                <button  onClick={addPost} className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <MdOutlineAddComment /> Crear un post</button>
+
+                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <MdPublic /> Publicaciones</button>
+                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <AiOutlineStar /> Favoritos</button>
+                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}> <img src={useravatar} className="w-8 h-8 rounded-full"/> Usuario <AiFillCaretDown /></button>
                 </nav>
 
-                <div id="drop" className=" hidden items-center bg-white rounded-lg py-2 w-64 shadow-xl absolute top-14 right-2 font-content" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}>
-                    <div className="flex justify-between mx-6 gap-5">
-                        <img src={useravatar} className="rounded-full w-1/4"/>
+                <div id="drop" className="absolute items-center hidden w-64 py-2 bg-white rounded-lg shadow-xl top-14 right-2 font-content" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}>
+                    <div className="flex justify-between gap-5 mx-6">
+                        <img src={useravatar} className="w-1/4 rounded-full"/>
                         <div className="w-3/4">
-                            <h2 className="text-dark-700 font-bold">{JSON.parse(localStorage.getItem("user")).username}</h2>
-                            <h2 className="text-dark-700">{JSON.parse(localStorage.getItem("user")).role}</h2>
-                        </div>
+                            
+                     {/*     <h2 className="font-bold text-dark-700">{JSON.parse(localStorage.getItem("user")).username}</h2>
+                         <h2 className="text-dark-700">{JSON.parse(localStorage.getItem("user")).role}</h2> */}
+                        
                     </div>
-                    <button className="bg-red-500 hover:bg-red-300 px-4 py-2 mt-4 text-gray hover:text-white w-11/12 rounded" onClick={onClickHandler}>Logout</button>
+                    </div>
+                    <button className="w-11/12 px-4 py-2 mt-4 bg-red-500 rounded hover:bg-red-300 text-gray hover:text-white" onClick={onClickHandler}>Logout</button>
                 </div>
             </div>
         </div>

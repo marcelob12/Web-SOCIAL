@@ -1,8 +1,9 @@
-import CreatePost from './pages/CreatePost/CreatePost';
+import CardContainer from "../../Components/CardContainer/CardContainer";
+
 
 const AdminMain = () => {
     <div>
-    <CreatePost />
+    <CardContainer />
  </div>
 
 }

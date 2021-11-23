@@ -4,7 +4,7 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import CreatePost from './Pages/CreatePost/CreatePost';
 import RouteLogin  from './Components/RouteLogin/RouteLogin';
 import Redirect from './Pages/Redirect/Redirect';
-import UserMain from './Pages/UserMain/UserMain';
+import CardContainer from './Components/CardContainer/CardContainer';
 
 
 
@@ -15,12 +15,16 @@ function App() {
         <Route path="/" element={<Navigate replace to={"/login"} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/Redirect" element={<Redirect />} />
+        <Route path="/CardContainer" element={<CardContainer />} />
+        <Route path="/CreatePost" element={<CreatePost />} />
+
+
 
       <Route
           path="/AdminMain"
           element={
             <RouteLogin role="admin">
-              <CreatePost />
+              <CardContainer />
             </RouteLogin>
           } />
 
@@ -28,7 +32,7 @@ function App() {
           path="/UserMain"
           element={
             <RouteLogin role="user">
-              <UserMain />
+              <CardContainer />
             </RouteLogin>
           } />
 
