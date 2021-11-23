@@ -13,6 +13,17 @@ export const UserProvider = (props) => {
         setToken(token);
     }
 
+    const setRole = ()=>{
+        if (user !== undefined) {
+            const dataxd = user;
+            localStorage.setItem("user", JSON.stringify(dataxd));
+        }
+    }
+    
+    useEffect(() => {
+        setRole();
+    }, [user]);
+
     useEffect(() => {
         const verifyCurrentToken = async () => {
             const tokenLS = localStorage.getItem(TOKEN_KEY);
@@ -55,6 +66,7 @@ export const UserProvider = (props) => {
     const logout = useCallback(() => {
         setUser(undefined);
         setTokenAll(undefined);
+        localStorage.setItem("user", undefined);
     }, [])
 
     const value = useMemo(() => ({

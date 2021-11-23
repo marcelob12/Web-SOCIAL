@@ -77,8 +77,8 @@ const Navbar = () => {
                         <img src={useravatar} className="w-1/4 rounded-full"/>
                         <div className="w-3/4">
                             
-                     {/*     <h2 className="font-bold text-dark-700">{JSON.parse(localStorage.getItem("user")).username}</h2>
-                         <h2 className="text-dark-700">{JSON.parse(localStorage.getItem("user")).role}</h2> */}
+                        <h2 className="font-bold text-dark-700">{JSON.parse(localStorage.getItem("user")).username}</h2>
+                        <h2 className="text-dark-700">{JSON.parse(localStorage.getItem("user")).role}</h2>
                         
                     </div>
                     </div>
