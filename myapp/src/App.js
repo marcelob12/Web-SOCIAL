@@ -2,9 +2,9 @@ import React from 'react';
 import Login from './Pages/Login/Login';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import CreatePost from './Pages/CreatePost/CreatePost';
-import  RouteLogin  from './Components/RouteLogin/RouteLogin';
+import RouteLogin  from './Components/RouteLogin/RouteLogin';
 import Redirect from './Pages/Redirect/Redirect';
-import ErrorPage from './Pages/ErrorPage/ErrorPage';
+import UserMain from './Pages/UserMain/UserMain';
 
 
 
@@ -28,7 +28,7 @@ function App() {
           path="/UserMain"
           element={
             <RouteLogin role="user">
-              <ErrorPage />
+              <UserMain />
             </RouteLogin>
           } />
 
