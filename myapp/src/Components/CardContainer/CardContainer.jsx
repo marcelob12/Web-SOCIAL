@@ -34,14 +34,21 @@ const CardContainer = () => {
     fetchPosts();
   }, [postMore]);
   
+
   if(postMore < 0){
-  return(
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="text-5xl font-bold">No hay más publicaciones</h1>
-      <button onClick={()=>{setPostMore(postMore + 1)}} >volver</button>
-    </div>
-  )
-  }
+    Swal.fire({
+      title: 'Parece que no hay posts que mostrar',
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Volver'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setPostMore(postMore + 1)
+      }
+    })
+      }
+    
+  
   
   console.log(postMore);
   
