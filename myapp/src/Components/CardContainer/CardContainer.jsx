@@ -37,7 +37,7 @@ const CardContainer = () => {
 
   if(postMore < 0){
     Swal.fire({
-      title: 'Parece que no hay posts que mostrar',
+      title: 'Parece que no hay posts por mostrar',
       icon: 'warning',
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Volver'
@@ -53,14 +53,15 @@ const CardContainer = () => {
   console.log(postMore);
   
   
-
+//Falta estilo de los botones para + y - posts
   return (
     <div className="min-h-screen bg-dark-400">
       <Navbar />
       <div className="flex justify-center">
         <div className="w-11/12 mt-11">
           <div>
-        <button className="flex" onClick={()=>{setPostMore(postMore - 1)}}> ver menos post </button>
+            
+        <button className="flex" onClick={()=>{setPostMore(postMore - 1)}}> ver menos post </button> 
         <button className="flex" onClick={()=>{setPostMore(postMore + 1)}}> ver mas post </button>
             
           </div>
