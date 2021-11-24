@@ -11,33 +11,33 @@ const CardPost = ({post}) => {
             imageUrl:"https://getyourcompliments.com/icon.png",
             imageWidth: 200,
             imageHeight: 200,
-            text: `Personas a las que le has gustado esta publicacion: ${post.likes[0].username}`, //no funciona todavía
+            text: `Personas a las que le has gustado esta publicacion: ${post.likes.map(like => like.username).join(' || ')}`, //ya funciona ;)
         });
     }
 
     return (
-        <div className="flex mb-12 bg-white shadow-lg rounded">
-            <div className="w-2/4 relative rounded-l">
-                <img src={post.image} className="rounded-l w-full" alt={post.description} />
-                <div className="flex flex-col justify-center absolute bottom-0 pl-3 py-2 w-full h-auto text-white font-bold bg-dark-700 bg-opacity-60">
+        <div className="flex mb-12 bg-white rounded shadow-lg">
+            <div className="relative w-2/4 rounded-l">
+                <img src={post.image} className="w-full rounded-l" alt={post.description} />
+                <div className="absolute bottom-0 flex flex-col justify-center w-full h-auto py-2 pl-3 font-bold text-white bg-dark-700 bg-opacity-60">
                     <p>{post.user.username}</p>
                     <p>{post.description}</p>
                 </div>
             </div>
 
-            <div className="w-2/4 m-5 font-content flex flex-col gap-4">
+            <div className="flex flex-col w-2/4 gap-4 m-5 font-content">
                 <div className="flex">
-                    <h2 className="font text-2xl font-bold">{post.title}</h2>
+                    <h2 className="text-2xl font-bold font">{post.title}</h2>
                     {/* <button>FavBTN</button> */}
                 </div>
-                <div className="text-dark-400 flex items-center gap-3"><BsCalendarDate /><span>{new Date(post.createdAt).toLocaleDateString()} - </span><span className="text-dark-400">{new Date(post.createdAt).toLocaleTimeString()}</span></div>
+                <div className="flex items-center gap-3 text-dark-400"><BsCalendarDate /><span>{new Date(post.createdAt).toLocaleDateString()} - </span><span className="text-dark-400">{new Date(post.createdAt).toLocaleTimeString()}</span></div>
                 <div className="flex gap-3">
                     <button className="w-5"><AiOutlineHeart /></button>
-                    {post.likes.length > 0?  (<a href="#" className="text-blue-500 text-lg underline hover:text-blue-400" onClick={onClickHandler}> {post.likes.length} me gusta</a>) : (<p>Esta publicación aún no tiene likes</p>)} 
+                    {post.likes.length > 0?  (<a href="#" className="text-lg text-blue-500 underline hover:text-blue-400" onClick={onClickHandler}> {post.likes.length} me gusta</a>) : (<p>Esta publicación aún no tiene likes</p>)} 
                 </div>
                 <div>
                     <p>Añadir comentario:</p>
-                    <textarea className="resize-none bg-gray-300 w-full h-16 rounded-md p-1 focus:outline-none" placeholder="Escribe tu comentario..."></textarea>
+                    <textarea className="w-full h-16 p-1 bg-gray-300 rounded-md resize-none focus:outline-none" placeholder="Escribe tu comentario..."></textarea>
                 </div>
                 <div className="h-11/12">
                     <p>Comentarios:</p>
