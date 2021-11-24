@@ -9,8 +9,8 @@ const CardPost = ({post}) => {
         Swal.fire({
             title: 'Likes',
             imageUrl:"https://getyourcompliments.com/icon.png",
-            imageWidth: 200,
-            imageHeight: 200,
+            imageWidth:150,
+            imageHeight:150,
             text: `Personas a las que le has gustado esta publicacion: ${post.likes.map(like => like.username).join(' || ')}`, //ya funciona ;)
         });
     }
