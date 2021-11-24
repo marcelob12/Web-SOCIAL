@@ -2,6 +2,10 @@ import React, {useState, useEffect} from 'react';
 import CardPost from '../../Components/CardPost/CardPost';
 import Navbar from '../../Components/Navbar/Navbar';
 import Swal from 'sweetalert2';
+import {AiOutlineArrowLeft} from 'react-icons/ai'
+import {AiOutlineArrowRight} from 'react-icons/ai'
+
+
 
 const CardContainer = () => {
   const token = localStorage.getItem("token");
@@ -59,11 +63,9 @@ const CardContainer = () => {
       <Navbar />
       <div className="flex justify-center">
         <div className="w-11/12 mt-11">
-          <div>
-            
-        <button className="flex" onClick={()=>{setPostMore(postMore - 1)}}> ver menos post </button> 
-        <button className="flex" onClick={()=>{setPostMore(postMore + 1)}}> ver mas post </button>
-            
+          <div className="mb-5">
+             <button onClick={()=>{setPostMore(postMore - 1)}} className="px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> Regresar Posts </button> 
+             <button onClick={()=>{setPostMore(postMore + 1)}} className="px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowRight className="inline "/> Siguientes Posts </button>  
           </div>
 
           {
@@ -80,8 +82,8 @@ const CardContainer = () => {
               null
           }
         
-      <button className="flex" onClick={()=>{setPostMore(postMore - 1)}}> ver menos post </button>
-      <button className="flex" onClick={()=>{setPostMore(postMore + 1)}}> ver mas post </button>
+        <button onClick={()=>{setPostMore(postMore - 1)}} className="px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> Regresar Posts </button> 
+        <button onClick={()=>{setPostMore(postMore + 1)}} className="px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowRight className="inline "/> Siguientes Posts </button>
         </div>
       </div>
     </div>
