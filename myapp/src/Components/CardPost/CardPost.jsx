@@ -18,7 +18,7 @@ const CardPost = ({post}) => {
     return (
         <div className="flex mb-12 bg-white rounded shadow-lg">
             <div className="relative w-2/4 rounded-l">
-                <img src={post.image} className="w-full rounded-l" alt={post.description} />
+                <img src={post.image} className="w-full rounded-l " alt={post.description} />
                 <div className="absolute bottom-0 flex flex-col justify-center w-full h-auto py-2 pl-3 font-bold text-white bg-dark-700 bg-opacity-60">
                     <p>{post.user.username}</p>
                     <p>{post.description}</p>
