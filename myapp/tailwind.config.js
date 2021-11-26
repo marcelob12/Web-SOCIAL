@@ -15,7 +15,8 @@ module.exports = {
       whitie:"#F2F2F2",
       dark: {
         700: "#24252A",
-        400: "#484A55"
+        400: "#484A55",
+        300:"#484B4B"
       },
       red:{
         500: "#DB3E3E",
@@ -24,13 +25,22 @@ module.exports = {
       blue:{
         500: "#1e60a6",
         400: "#337ac4"
-      }
+      },
+      yellow:{
+        300:"#1e60a6",
+        400:"#E9EB4A",
+        500:"#D1CF1E"
+      },
     },
     fontFamily:{
-      heading: ['Good Brush', 'cursive'],
       content: ['Saira Semi Condensed', 'sans-serif']
     },
-    extend: {},
+    extend: {
+      outline: {
+        skyBO: '2px solid #29B8AB',
+      }
+     
+    },
   },
   variants: {
     extend: {},
