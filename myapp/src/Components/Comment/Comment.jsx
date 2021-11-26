@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Comment = ({comment}) => {
+const Comment = ({comment, post}) => {
     return ( 
         <div className="flex gap-3 mb-4">
             <div className="flex items-center justify-center rounded-full bg-gradient-to-r from-skyD to-aqua w-12">

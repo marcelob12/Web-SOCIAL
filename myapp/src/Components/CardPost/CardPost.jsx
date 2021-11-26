@@ -1,14 +1,18 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import {AiFillHeart} from 'react-icons/ai';
 import {BsCalendarDate} from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
+import axios from 'axios'
+
 
 const CardPost = ({post}) => {
     const [Like, setLike]=useState(null);
-    const [likeNumber,setLikeNumber] = useState(post.likes.length)
+    const [likeNumber,setLikeNumber] = useState(post.likes.length);
     const user = JSON.parse(localStorage.getItem('user')).username;
+    const description = useRef(null);
+   
 
     useEffect(() => {
         post.likes.forEach(l=> {
@@ -43,7 +47,6 @@ const CardPost = ({post}) => {
                 }
             });
             const likeResponse = await response.json();
-            console.log(likeResponse);
             
             if(Like){
                 setLike(false);
@@ -52,21 +55,15 @@ const CardPost = ({post}) => {
             }else{
                 setLike(true);
                 setLikeNumber(likeNumber+1);
-            }
-
-            // ReactDOM.render(     
-            //     <CardPost />,
-            //     document.getElementById('btnLike')        
-            // );
-        
+            }      
 
         } catch (error) {
             console.error(error)
         }
         
 
-        // ReactDOM.render(document.querySelector('#btnLike'), document.getElementById('root'));
     }
+
 
 
     useEffect(() => {
@@ -84,10 +81,42 @@ const CardPost = ({post}) => {
     }, [Like])
 
 
+
+    async function onSubmit(e)
+    {
+      e.preventDefault();
+      const descriptionValue = description.current.value
+      if(descriptionValue.length<8){
+        Swal.fire({
+            icon: 'error',
+            title: 'ERROR',
+            text: 'Comentario debe tener al menos 8 caracteres',
+          })
+
+          description.current.value="";
+      }else{
+        try{
+            const response2 = await axios.patch(`https://posts-pw2021.herokuapp.com/api/v1/post/comment/${post._id}`,
+                {description: descriptionValue},
+                {headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'}}
+            );  
+            description.current.value="";
+        } catch(error){
+            const {response2} = error;
+            console.log(error);        
+        }  
+      }
+     
+
+   
+}
+
     return (
         <div className="flex mb-12 bg-white rounded shadow-lg">
             <div className="relative w-2/4 rounded-l">
-                <img src={post.image} className="w-full rounded-l " alt={post.description} />
+                <img src={post.image} className="w-full rounded-l" alt={post.description} />
                 <div className="absolute bottom-0 flex flex-col justify-center w-full h-auto py-2 pl-3 font-bold text-white bg-dark-700 bg-opacity-60">
                     <p>{post.user.username}</p>
                     <p>{post.description}</p>
@@ -103,17 +132,21 @@ const CardPost = ({post}) => {
                 <div className="flex gap-3 text-gray-500">
                     <button data-id={post._id} className="w-5 text-xl " onClick={onClickLike}><AiFillHeart className=" hover:text-red-500"/> </button>
                     {
-                        post.likes.length > 0?
+                        
                         (<a id="btnBUM" href="#" className="text-lg text-blue-500 underline hover:text-blue-400" onClick={onClickHandler}> {likeNumber} me gusta</a>) 
-                        :
-                        (<p>Esta publicación aún no tiene likes</p>)
+                        
                     } 
                 </div>
-                <div>
+                <form
+                    onSubmit={onSubmit}
+                >
                     <p>Añadir comentario:</p>
-                    <textarea className="w-full h-16 p-1 bg-gray-300 rounded-md resize-none focus:outline-none" placeholder="Escribe tu comentario..."></textarea>
-                </div>
-                <div className="h-11/12">
+                    <input className="w-full h-16 p-1 bg-gray-300 rounded-md resize-none focus:outline-none" placeholder="Escribe tu comentario... " type="text" 
+                        ref={description}
+                    />
+                    
+                </form >
+                <div className="overflow-y-scroll max-h-60">
                     <p>Comentarios:</p>
                     {post.comments.length > 0?
                         post.comments.map(c=>{                     
