@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useUserContext } from "../../Contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import userlogin from "../../Assets/img/usuario.png";
+import { HiOutlineLogin } from "react-icons/hi";
 import Swal from "sweetalert2";
 
 const Login = () => {
@@ -35,33 +37,40 @@ const Login = () => {
 
     return (
       <div className="flex items-center justify-center min-h-screen bg-dark-700">
-        <main>
+        <main className>
+        <div className="flex flex-row gap-10 p-10 m-6  rounded-xl">
+        <img className="pl-3 w-2/4 "
+          src={userlogin} />
           <form 
-            className="flex flex-col gap-10 p-10 bg-gray-500 w-96"
+            className="flex flex-col gap-10 p-10 bg-dark-400 w-96 rounded-3xl"
             onSubmit = { onSubmitHandler }>
-            <h1>Logeate</h1>
-            <input 
-              className="p-2 rounded"
-              title='Username'
-              type='text'
-              placeholder='Ingrese su username'
-              onChange={(e) => onChange(e, setUsername)}
-              value={Username}
+              <h1 className="font-bold self-center font-content text-5xl text-aqua"
+              >Log in </h1>
+              <input className="p-2 rounded hover:border-skyD focus:outline-skyBO "
+                title='Username'
+                type='text'
+                placeholder='Ingrese su username'
+                onChange={(e) => onChange(e, setUsername)}
+                value={Username}
+                />
+                
+              <input className="p-2 rounded hover:border-skyD focus:outline-skyBO "
+                title='Password'
+                type="password"
+                placeholder="Ingrese su contraseña"
+                onChange={(e) => onChange(e, setPassword)}
+                value={Password}
               />
+
+              <div className="flex flex-row gap-5">
+                <HiOutlineLogin className="text-5xl text-skyL"/>
+                <button className="w-3/4 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-blue-700 hover:border-blue-500 rounded">
+                Ingresar
+                </button>
+              </div>
               
-              <input 
-              className="p-2"
-              title='Password'
-              type="password"
-              placeholder="Ingrese su contraseña"
-              onChange={(e) => onChange(e, setPassword)}
-              value={Password}
-              />
-            <button className="p-1 text-white rounded-md bg-skyD">
-              Ingresar
-            </button>
-            
           </form>
+          </div>
         </main>
     </div>
     );
