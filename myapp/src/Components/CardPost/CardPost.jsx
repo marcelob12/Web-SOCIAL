@@ -7,6 +7,7 @@ import Comment from '../Comment/Comment'
 
 const CardPost = ({post}) => {
     const [Like, setLike]=useState(null);
+    const [likeNumber,setLikeNumber] = useState(post.likes.length)
     const user = JSON.parse(localStorage.getItem('user')).username;
 
     useEffect(() => {
@@ -46,8 +47,11 @@ const CardPost = ({post}) => {
             
             if(Like){
                 setLike(false);
+                setLikeNumber(likeNumber-1);
+
             }else{
                 setLike(true);
+                setLikeNumber(likeNumber+1);
             }
 
             // ReactDOM.render(     
@@ -70,7 +74,7 @@ const CardPost = ({post}) => {
         const btn = document.querySelector(`[data-id="${post._id}"]`);
         
         if(Like) {
-            btn.classList.add("text-red-500");        
+            btn.classList.add("text-red-500");            
         } else{
             btn.classList.remove("text-red-500");
         }
@@ -100,7 +104,7 @@ const CardPost = ({post}) => {
                     <button data-id={post._id} className="w-5 text-xl " onClick={onClickLike}><AiFillHeart className=" hover:text-red-500"/> </button>
                     {
                         post.likes.length > 0?
-                        (<a id="btnBUM" href="#" className="text-lg text-blue-500 underline hover:text-blue-400" onClick={onClickHandler}> {post.likes.length} me gusta</a>) 
+                        (<a id="btnBUM" href="#" className="text-lg text-blue-500 underline hover:text-blue-400" onClick={onClickHandler}> {likeNumber} me gusta</a>) 
                         :
                         (<p>Esta publicación aún no tiene likes</p>)
                     } 
