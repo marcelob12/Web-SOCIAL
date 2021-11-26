@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
-import {AiOutlineHeart} from 'react-icons/ai';
+import {AiFillHeart} from 'react-icons/ai';
 import {BsCalendarDate} from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
@@ -96,8 +96,8 @@ const CardPost = ({post}) => {
                     {/* <button>FavBTN</button> */}
                 </div>
                 <div className="flex items-center gap-3 text-dark-400"><BsCalendarDate /><span>{new Date(post.createdAt).toLocaleDateString()} - </span><span className="text-dark-400">{new Date(post.createdAt).toLocaleTimeString()}</span></div>
-                <div className="flex gap-3">
-                    <button data-id={post._id} className="w-5 text-xl " onClick={onClickLike}><AiOutlineHeart /></button>
+                <div className="flex gap-3 text-gray-500">
+                    <button data-id={post._id} className="w-5 text-xl " onClick={onClickLike}><AiFillHeart className=" hover:text-red-500"/> </button>
                     {
                         post.likes.length > 0?
                         (<a id="btnBUM" href="#" className="text-lg text-blue-500 underline hover:text-blue-400" onClick={onClickHandler}> {post.likes.length} me gusta</a>) 
