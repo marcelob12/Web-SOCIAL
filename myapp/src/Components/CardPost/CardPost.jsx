@@ -5,15 +5,17 @@ import {BsCalendarDate} from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
 import axios from 'axios'
+import CardContainer from '../CardContainer/CardContainer';
 
 
 const CardPost = ({post}) => {
     const [Like, setLike]=useState(null);
-    const [likeNumber,setLikeNumber] = useState(post.likes.length);
+    const [likeNumber, setLikeNumber] = useState(post.likes.length);
+    // const [rendercomments, setRenderComments]=useState(post.comments);
     const user = JSON.parse(localStorage.getItem('user')).username;
     const description = useRef(null);
+     
    
-
     useEffect(() => {
         post.likes.forEach(l=> {
             // const btncolor=document.querySelector("#btnLike");
@@ -82,36 +84,40 @@ const CardPost = ({post}) => {
 
 
 
-    async function onSubmit(e)
-    {
-      e.preventDefault();
-      const descriptionValue = description.current.value
-      if(descriptionValue.length<8){
-        Swal.fire({
-            icon: 'error',
-            title: 'ERROR',
-            text: 'Comentario debe tener al menos 8 caracteres',
-          })
+    async function onSubmit(e) {
+        e.preventDefault();
+        const descriptionValue = description.current.value
+        if(descriptionValue.length<8){
+            Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: 'Comentario debe tener al menos 8 caracteres',
+            })
 
-          description.current.value="";
-      }else{
-        try{
-            const response2 = await axios.patch(`https://posts-pw2021.herokuapp.com/api/v1/post/comment/${post._id}`,
-                {description: descriptionValue},
-                {headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json'}}
-            );  
             description.current.value="";
-        } catch(error){
-            const {response2} = error;
-            console.log(error);        
-        }  
-      }
-     
+        } else{
+            try{
+                const response2 = await axios.patch(`https://posts-pw2021.herokuapp.com/api/v1/post/comment/${post._id}`,
+                    {description: descriptionValue},
+                    {headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'}}
+                );
+                description.current.value="";
+            } catch(error){
+                const {response2} = error;
+                console.log(error);        
+            }  
+        }
 
-   
-}
+    }
+
+    // const settingComments=(Comment)=>{
+    //     const comment=[...rendercomments,{...Comment, user:user}];
+    //     setRenderComments(comment);
+    // }
+
+
 
     return (
         <div className="flex mb-12 bg-white rounded shadow-lg">
@@ -146,7 +152,7 @@ const CardPost = ({post}) => {
                     />
                     
                 </form >
-                <div className="overflow-y-scroll max-h-60">
+                <div id="comments" className="overflow-y-scroll max-h-60">
                     <p>Comentarios:</p>
                     {post.comments.length > 0?
                         post.comments.map(c=>{                     
