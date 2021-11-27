@@ -33,9 +33,15 @@ module.exports = {
       },
     },
     fontFamily:{
+      heading: ['Anton', 'cursive'],
       content: ['Saira Semi Condensed', 'sans-serif']
     },
     extend: {
+      spacing: {
+        '98': '35rem',
+        '100': '38rem',
+        '150': '45rem',
+      },
       outline: {
         skyBO: '2px solid #29B8AB',
       }
