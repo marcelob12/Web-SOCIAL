@@ -1,5 +1,5 @@
 import React,{useState, useEffect, useRef} from 'react';
-import {AiFillHeart} from 'react-icons/ai';
+import {AiFillHeart, AiFillStar} from 'react-icons/ai';
 import {BsCalendarDate} from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
@@ -7,9 +7,9 @@ import axios from 'axios'
 
 
 const CardPost = ({post}) => {
-    const [Like, setLike]=useState(null);
+    const [Like, setLike] = useState(null);
+    const [Fav, setFav] = useState(false);
     const [likeNumber, setLikeNumber] = useState(post.likes.length);
-    // const [rendercomments, setRenderComments]=useState(post.comments);
     const [comments, setComments] = useState(post.comments)
     const user = JSON.parse(localStorage.getItem('user')).username;
     const description = useRef(null);
@@ -23,6 +23,8 @@ const CardPost = ({post}) => {
                 setLike(false);
             }
         });
+
+
     }, []);
     
     
@@ -59,8 +61,6 @@ const CardPost = ({post}) => {
         }
     }
 
-
-
     useEffect(() => {        
         const btn = document.querySelector(`[data-id="${post._id}"]`);
         
@@ -72,6 +72,24 @@ const CardPost = ({post}) => {
 
     }, [Like])
 
+    const onClickFav = async () =>{
+        if(Fav) {
+            setFav(false);
+        } else{
+            setFav(true);
+        }
+    }
+
+    useEffect(() => {        
+        const btn=document.querySelector(`[data-fid="${post._id}"]`)
+
+        if(Fav) {
+            btn.classList.add("text-yellow-700");
+        } else{
+            btn.classList.remove("text-yellow-700");
+        }
+
+    }, [Fav])
 
 
     async function onSubmit(e) {
@@ -95,6 +113,7 @@ const CardPost = ({post}) => {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json'}}
                 );
+
                 const com = {
                     description: descriptionValue,
                     user:{
@@ -102,6 +121,7 @@ const CardPost = ({post}) => {
                     },
                     _id: post._id
                 }
+                
                 setComments([...comments, com]);
                 description.current.value="";
             
@@ -112,12 +132,6 @@ const CardPost = ({post}) => {
         }
 
     }
-
-    // const settingComments=(Comment)=>{
-    //     const comment=[...rendercomments,{...Comment, user:user}];
-    //     setRenderComments(comment);
-    // }
-
 
 
     return (
@@ -134,9 +148,9 @@ const CardPost = ({post}) => {
             </div>
 
             <div className="flex flex-col lg:w-2/4 gap-4 m-5 font-content">
-                <div className="flex">
+                <div className="flex gap-2">
                     <h2 className="text-2xl font-bold font">{post.title}</h2>
-                    {/* <button>FavBTN</button> */}
+                    <button data-fid={post._id} onClick={onClickFav} className="w-5 text-xl text-gray-500"><AiFillStar className="hover:text-yellow-700"/> </button>
                 </div>
 
                 <div className="flex items-center gap-3 text-dark-400">
@@ -146,7 +160,7 @@ const CardPost = ({post}) => {
                 </div>
                 
                 <div className="lg:hidden w-full h-auto overflow-y-auto max-h-16">
-                    <p className="font-light"> 
+                    <p className="font-light">
                         <span className="font-bold"> {post.user.username} - &nbsp; </span>
                         {post.description}
                     </p>
@@ -171,7 +185,7 @@ const CardPost = ({post}) => {
                 <p>Comentarios:</p>
                 <div id="comments" className="max-h-60 overflow-y-auto">
                     {comments.length > 0?
-                        comments.map(c=>{                     
+                        comments.map(c=>{                  
                             return(
                                 <Comment 
                                     comment={c}

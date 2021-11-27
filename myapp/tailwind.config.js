@@ -29,7 +29,8 @@ module.exports = {
       yellow:{
         300:"#1e60a6",
         400:"#E9EB4A",
-        500:"#D1CF1E"
+        500:"#D1CF1E",
+        700:"#F2DC1F"
       },
     },
     fontFamily:{
