@@ -1,11 +1,9 @@
 import React,{useState, useEffect, useRef} from 'react';
-import ReactDOM from 'react-dom';
 import {AiFillHeart} from 'react-icons/ai';
 import {BsCalendarDate} from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
 import axios from 'axios'
-import CardContainer from '../CardContainer/CardContainer';
 
 
 const CardPost = ({post}) => {
@@ -18,13 +16,10 @@ const CardPost = ({post}) => {
    
     useEffect(() => {
         post.likes.forEach(l=> {
-            // const btncolor=document.querySelector("#btnLike");
-            if(l.username==user){
+            if(l.username === user){
                 setLike(true);
-                // btncolor.classList.add("text-red-500");
             }else{
                 setLike(false);
-                // btncolor.classList.remove("text-red-500");
             }
         });
     }, []);
@@ -48,8 +43,7 @@ const CardPost = ({post}) => {
                     "Authorization": "Bearer " + localStorage.getItem('token')
                 }
             });
-            const likeResponse = await response.json();
-            
+                        
             if(Like){
                 setLike(false);
                 setLikeNumber(likeNumber-1);
@@ -68,8 +62,7 @@ const CardPost = ({post}) => {
 
 
 
-    useEffect(() => {
-        
+    useEffect(() => {        
         const btn = document.querySelector(`[data-id="${post._id}"]`);
         
         if(Like) {
@@ -77,8 +70,6 @@ const CardPost = ({post}) => {
         } else{
             btn.classList.remove("text-red-500");
         }
-
-
 
     }, [Like])
 
@@ -97,7 +88,7 @@ const CardPost = ({post}) => {
             description.current.value="";
         } else{
             try{
-                const response2 = await axios.patch(`https://posts-pw2021.herokuapp.com/api/v1/post/comment/${post._id}`,
+                await axios.patch(`https://posts-pw2021.herokuapp.com/api/v1/post/comment/${post._id}`,
                     {description: descriptionValue},
                     {headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -105,7 +96,7 @@ const CardPost = ({post}) => {
                 );
                 description.current.value="";
             } catch(error){
-                const {response2} = error;
+                // const {response} = error;
                 console.log(error);        
             }  
         }
@@ -120,40 +111,55 @@ const CardPost = ({post}) => {
 
 
     return (
-        <div className="flex mb-12 bg-white rounded shadow-lg">
-            <div className="relative w-2/4 rounded-l">
-                <img src={post.image} className="w-full rounded-l" alt={post.description} />
-                <div className="absolute bottom-0 flex flex-col justify-center w-full h-auto py-2 pl-3 font-bold text-white bg-dark-700 bg-opacity-60">
-                    <p>{post.user.username}</p>
-                    <p>{post.description}</p>
+        <div className="flex flex-col lg:flex-row mb-12 bg-white rounded shadow-lg lg:h-98">
+            
+            <div className="flex flex-col justify-center items-center relative lg:w-2/4 rounded-l bg-gray-300">
+                <img loading="lazy" src={post.image} className="w-full lg:h-full rounded-l" alt={post.title}/>
+                <div className="hidden lg:absolute bottom-0 lg:flex lg:flex-col lg:justify-center w-full h-auto py-2 pl-3 font-bold text-white bg-dark-700 bg-opacity-70 max-h-28">
+                    <div className="overflow-y-auto">
+                        <p>{post.user.username}</p>
+                        <p className="font-light">{post.description}</p>
+                    </div>
                 </div>
             </div>
 
-            <div className="flex flex-col w-2/4 gap-4 m-5 font-content">
+            <div className="flex flex-col lg:w-2/4 gap-4 m-5 font-content">
                 <div className="flex">
                     <h2 className="text-2xl font-bold font">{post.title}</h2>
                     {/* <button>FavBTN</button> */}
                 </div>
-                <div className="flex items-center gap-3 text-dark-400"><BsCalendarDate /><span>{new Date(post.createdAt).toLocaleDateString()} - </span><span className="text-dark-400">{new Date(post.createdAt).toLocaleTimeString()}</span></div>
+
+                <div className="flex items-center gap-3 text-dark-400">
+                    <BsCalendarDate />
+                    <span>{new Date(post.createdAt).toLocaleDateString()} - </span>
+                    <span className="text-dark-400">{new Date(post.createdAt).toLocaleTimeString()}</span>
+                </div>
+                
+                <div className="lg:hidden w-full h-auto overflow-y-auto max-h-16">
+                    <p className="font-light"> 
+                        <span className="font-bold"> {post.user.username} - &nbsp; </span>
+                        {post.description}
+                    </p>
+                </div>
+                
                 <div className="flex gap-3 text-gray-500">
                     <button data-id={post._id} className="w-5 text-xl " onClick={onClickLike}><AiFillHeart className=" hover:text-red-500"/> </button>
                     {
-                        
-                        (<a id="btnBUM" href="#" className="text-lg text-blue-500 underline hover:text-blue-400" onClick={onClickHandler}> {likeNumber} me gusta</a>) 
-                        
+                        (<a id="btnBUM" href="#" className="text-lg text-blue-500 underline hover:text-blue-400" onClick={onClickHandler}> {likeNumber} me gusta</a>)   
                     } 
                 </div>
-                <form
-                    onSubmit={onSubmit}
-                >
+                
+                <form onSubmit={onSubmit}>
                     <p>Añadir comentario:</p>
-                    <input className="w-full h-16 p-1 bg-gray-300 rounded-md resize-none focus:outline-none" placeholder="Escribe tu comentario... " type="text" 
+                    <input 
+                        className="w-full h-16 p-1 bg-gray-300 rounded-md resize-none focus:outline-none" 
+                        placeholder="Escribe tu comentario... " type="text" 
                         ref={description}
                     />
-                    
                 </form >
-                <div id="comments" className="overflow-y-scroll max-h-60">
-                    <p>Comentarios:</p>
+                
+                <p>Comentarios:</p>
+                <div id="comments" className="max-h-60 overflow-y-auto">
                     {post.comments.length > 0?
                         post.comments.map(c=>{                     
                             return(
@@ -167,7 +173,9 @@ const CardPost = ({post}) => {
                         <p className="text-red-500">Esta publicación no tiene comentarios...</p>
                     }
                 </div>
+            
             </div>
+
         </div>
     );
 }

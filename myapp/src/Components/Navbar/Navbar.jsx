@@ -65,7 +65,7 @@ const Navbar = () => {
                     </button>
                 </div>
 
-                <nav className="hidden h-full lg:w-3/5 lg:flex lg:justify-end font-content text-gray-500">
+                <nav className="hidden h-full lg:w-2/5 lg:flex lg:justify-end font-content text-gray-500">
                     {
                         role === "user"? 
                             <button onClick={addPost} className="hidden h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <MdOutlineAddComment /> Crear un post</button>
@@ -76,12 +76,12 @@ const Navbar = () => {
                     
                     <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <MdPublic /> Publicaciones</button>
                     <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <AiOutlineStar /> Favoritos</button>
-                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}> <img src={useravatar} className="w-8 h-8 rounded-full"/> Usuario <AiFillCaretDown /></button>
+                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}> <img src={useravatar} className="w-8 h-8 rounded-full" alt="avatar-user"/> Usuario <AiFillCaretDown /></button>
                 </nav>
 
-                <div id="drop" className="absolute items-center hidden w-64 py-2 bg-white rounded-lg shadow-xl top-14 right-2 font-content" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}>
+                <div id="drop" className="absolute z-10 items-center hidden w-64 py-2 top-80 bg-white rounded-lg shadow-xl lg:top-14 lg:right-2 font-content" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}>
                     <div className="flex justify-between gap-5 mx-6">
-                        <img src={useravatar} className="w-1/4 rounded-full"/>
+                        <img src={useravatar} className="w-1/4 rounded-full" alt="user-img"/>
                         <div className="w-3/4">
                                 
                             <h2 className="font-bold text-dark-700">{JSON.parse(localStorage.getItem("user")).username}</h2>
@@ -91,6 +91,7 @@ const Navbar = () => {
                     </div>
                     <button className="w-11/12 px-4 py-2 mt-4 bg-red-500 rounded hover:bg-red-300 text-gray-500 hover:text-white" onClick={onClickHandler}>Logout</button>
                 </div>
+                
             </div>
         </div>
     );

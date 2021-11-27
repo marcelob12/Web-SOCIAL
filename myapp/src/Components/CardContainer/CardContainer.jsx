@@ -23,7 +23,7 @@ const CardContainer = () => {
             "Authorization": `Bearer ${token}`
           }
         });
-  
+        
         if(response.ok){
           const data = await response.json();
           setPost(data.data);
@@ -50,22 +50,20 @@ const CardContainer = () => {
         setPostMore(postMore + 1)
       }
     })
-      }
+  }
     
-  
-  
-  console.log(postMore);
-  
   
 //Falta estilo de los botones para + y - posts
   return (
     <div className="min-h-screen bg-dark-400">
+      
       <Navbar />
+      
       <div className="flex justify-center">
         <div className="w-11/12 mt-11">
-          <div className="mb-5">
-             <button onClick={()=>{setPostMore(postMore - 1)}} className="px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> Regresar Posts </button> 
-             <button onClick={()=>{setPostMore(postMore + 1)}} className="px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowRight className="inline "/> Siguientes Posts </button>  
+          <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row lg:justify-between mb-5">
+             <button onClick={()=>{setPostMore(postMore - 1)}} className="flex justify-center items-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> <div>Página anterior</div> </button> 
+             <button onClick={()=>{setPostMore(postMore + 1)}} className="flex justify-center items-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "> <div>Página siguiente</div> <AiOutlineArrowRight className="inline "/> </button>  
           </div>
 
           {
@@ -82,10 +80,14 @@ const CardContainer = () => {
               null
           }
         
-        <button onClick={()=>{setPostMore(postMore - 1)}} className="px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> Regresar Posts </button> 
-        <button onClick={()=>{setPostMore(postMore + 1)}} className="px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowRight className="inline "/> Siguientes Posts </button>
+          <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row lg:justify-between mb-10">
+             <button onClick={()=>{setPostMore(postMore - 1)}} className="flex justify-center items-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> <div>Página anterior</div> </button> 
+             <button onClick={()=>{setPostMore(postMore + 1)}} className="flex justify-center items-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "> <div>Página siguiente</div> <AiOutlineArrowRight className="inline "/> </button>  
+          </div>
+
         </div>
       </div>
+
       <div className="relative pt-1 bg-gradient-to-r from-aqua to-skyD"></div>
     </div>
   );
