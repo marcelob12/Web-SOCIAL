@@ -10,6 +10,7 @@ const CardPost = ({post}) => {
     const [Like, setLike]=useState(null);
     const [likeNumber, setLikeNumber] = useState(post.likes.length);
     // const [rendercomments, setRenderComments]=useState(post.comments);
+    const [comments, setComments] = useState(post.comments)
     const user = JSON.parse(localStorage.getItem('user')).username;
     const description = useRef(null);
      
@@ -56,8 +57,6 @@ const CardPost = ({post}) => {
         } catch (error) {
             console.error(error)
         }
-        
-
     }
 
 
@@ -77,7 +76,9 @@ const CardPost = ({post}) => {
 
     async function onSubmit(e) {
         e.preventDefault();
+        
         const descriptionValue = description.current.value
+
         if(descriptionValue.length<8){
             Swal.fire({
                 icon: 'error',
@@ -94,7 +95,16 @@ const CardPost = ({post}) => {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json'}}
                 );
+                const com = {
+                    description: descriptionValue,
+                    user:{
+                        username: user
+                    },
+                    _id: post._id
+                }
+                setComments([...comments, com]);
                 description.current.value="";
+            
             } catch(error){
                 // const {response} = error;
                 console.log(error);        
@@ -114,7 +124,7 @@ const CardPost = ({post}) => {
         <div className="flex flex-col lg:flex-row mb-12 bg-white rounded shadow-lg lg:h-98">
             
             <div className="flex flex-col justify-center items-center relative lg:w-2/4 rounded-l bg-gray-300">
-                <img loading="lazy" src={post.image} className="w-full lg:h-full rounded-l" alt={post.title}/>
+                <img loading="lazy" src={post.image} className="w-full lg:w-auto lg:h-full rounded-l" alt={post.title}/>
                 <div className="hidden lg:absolute bottom-0 lg:flex lg:flex-col lg:justify-center w-full h-auto py-2 pl-3 font-bold text-white bg-dark-700 bg-opacity-70 max-h-28">
                     <div className="overflow-y-auto">
                         <p>{post.user.username}</p>
@@ -160,8 +170,8 @@ const CardPost = ({post}) => {
                 
                 <p>Comentarios:</p>
                 <div id="comments" className="max-h-60 overflow-y-auto">
-                    {post.comments.length > 0?
-                        post.comments.map(c=>{                     
+                    {comments.length > 0?
+                        comments.map(c=>{                     
                             return(
                                 <Comment 
                                     comment={c}
