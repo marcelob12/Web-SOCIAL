@@ -2,8 +2,7 @@ import React, {useState, useEffect} from 'react';
 import CardPost from '../../Components/CardPost/CardPost';
 import Navbar from '../../Components/Navbar/Navbar';
 import Swal from 'sweetalert2';
-import {AiOutlineArrowLeft} from 'react-icons/ai'
-import {AiOutlineArrowRight} from 'react-icons/ai'
+import {AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai';
 
 
 
@@ -12,6 +11,7 @@ const CardContainer = () => {
   const [post, setPost] = useState([]);
   const [favs, setFavs] = useState([]);
   const [postMore , setPostMore] = useState(0);
+  const [PageLimit, setPageLimit] = useState(1);
   
   
   
@@ -27,6 +27,7 @@ const CardContainer = () => {
         
         if(response.ok){
           const data = await response.json();
+          setPageLimit(data.pages);
           setPost(data.data);
         }
   
@@ -59,10 +60,26 @@ const CardContainer = () => {
   
     fetchPosts();
     fetchFavorites();
-
+    
+    
   }, [postMore]);
   
+  
+  if(postMore == PageLimit ){
+    Swal.fire({
+      title: 'Has llegado al final de los post',
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Volver'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setPostMore(postMore - 1)
+      }
+    })
+  } 
+  console.log(postMore, PageLimit);
 
+    
   if(postMore < 0){
     Swal.fire({
       title: 'Parece que no hay posts por mostrar',
