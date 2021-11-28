@@ -1,13 +1,15 @@
 import React,{useState, useEffect, useRef} from 'react';
 import {AiFillHeart, AiFillStar} from 'react-icons/ai';
-import {BsCalendarDate} from 'react-icons/bs';
-import {BiHide} from 'react-icons/bi';
+import {BsCalendarDate,BsPencilSquare} from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
 import axios from 'axios'
+import UpdatePost from '../../Pages/UpdatePost/UpdatePost';
+import { useNavigate } from "react-router-dom";
 
 
 const CardPost = ({post, favs}) => {
+    const navigate = useNavigate();
     const [Like, setLike] = useState(null);
     const [Fav, setFav] = useState(null);
     const [likeNumber, setLikeNumber] = useState(post.likes.length);
@@ -161,14 +163,18 @@ const CardPost = ({post, favs}) => {
     }, [Fav])
     
 
-
+    const onClickUpdate = (e) =>{
+        e.preventDefault();
+        navigate("/UpdatePost");
+        localStorage.setItem('post', JSON.stringify(post._id))
+    }
 
     return (
-        <div className="flex flex-col lg:flex-row mb-12 bg-white rounded shadow-lg lg:h-98">
+        <div className="flex flex-col mb-12 bg-white rounded shadow-lg lg:flex-row lg:h-98">
             
-            <div className="flex flex-col justify-center items-center relative lg:w-2/4 rounded-l bg-gray-300">
-                <img loading="lazy" src={post.image} className="w-full lg:w-auto lg:h-full rounded-l" alt={post.title}/>
-                <div className="hidden lg:absolute bottom-0 lg:flex lg:flex-col lg:justify-center w-full h-auto py-2 pl-3 font-bold text-white bg-dark-700 bg-opacity-70 max-h-28">
+            <div className="relative flex flex-col items-center justify-center bg-gray-300 rounded-l lg:w-2/4">
+                <img loading="lazy" src={post.image} className="w-full rounded-l lg:w-auto lg:h-full" alt={post.title}/>
+                <div className="bottom-0 hidden w-full h-auto py-2 pl-3 font-bold text-white lg:absolute lg:flex lg:flex-col lg:justify-center bg-dark-700 bg-opacity-70 max-h-28">
                     <div className="overflow-y-auto">
                         <p>{post.user.username}</p>
                         <p className="font-light">{post.description}</p>
@@ -176,10 +182,17 @@ const CardPost = ({post, favs}) => {
                 </div>
             </div>
 
-            <div className="flex flex-col lg:w-2/4 gap-4 m-5 font-content">
+            <div className="flex flex-col gap-4 m-5 lg:w-2/4 font-content">
                 <div className="flex gap-2">
                     <h2 className="text-2xl font-bold font">{post.title}</h2>
                     <button data-fid={post._id} onClick={onClickFav} className="w-5 text-xl text-gray-500"><AiFillStar className="hover:text-yellow-700"/> </button>
+                    
+                    {
+                        JSON.parse(localStorage.getItem("user")).username === post.user.username ? 
+                            <button className="flex items-center justify-center h-12 gap-3 hover:text-aqua lg:w-1/7 lg:h-auto" onClick={onClickUpdate} > <BsPencilSquare /></button>                
+                        :
+                            <button className="hidden"> <BsPencilSquare /></button>
+                    }
                 </div>
 
                 <div className="flex items-center gap-3 text-dark-400">
@@ -188,7 +201,7 @@ const CardPost = ({post, favs}) => {
                     <span className="text-dark-400">{new Date(post.createdAt).toLocaleTimeString()}</span>
                 </div>
                 
-                <div className="lg:hidden w-full h-auto overflow-y-auto max-h-16">
+                <div className="w-full h-auto overflow-y-auto lg:hidden max-h-16">
                     <p className="font-light">
                         <span className="font-bold"> {post.user.username} - &nbsp; </span>
                         {post.description}
@@ -212,7 +225,7 @@ const CardPost = ({post, favs}) => {
                 </form >
                 
                 <p>Comentarios:</p>
-                <div id="comments" className="max-h-60 overflow-y-auto">
+                <div id="comments" className="overflow-y-auto max-h-60">
                     {comments.length > 0?
                         comments.map(c=>{                  
                             return(
