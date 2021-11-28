@@ -84,7 +84,16 @@ const Navbar = () => {
 
                     }
                     
-                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onClick={onClickPosts}> <MdPublic /> Publicaciones</button>
+                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <MdPublic /> Publicaciones</button>
+                    
+                    {
+                        role === "admin"? 
+                            <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onClick={onClickPosts}> <MdPublic /> Mis Posts</button>                
+                        :
+                            <button className="hidden"> <MdPublic /> Mis Posts</button>
+                    }
+                    
+                    
                     <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onClick={onClickFav}> <AiOutlineStar /> Favoritos</button>
                     <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}> <img src={useravatar} className="w-8 h-8 rounded-full" alt="avatar-user"/> Usuario <AiFillCaretDown /></button>
                 </nav>

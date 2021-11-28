@@ -10,6 +10,7 @@ import {AiOutlineArrowRight} from 'react-icons/ai'
 const CardContainer = () => {
   const token = localStorage.getItem("token");
   const [post, setPost] = useState([]);
+  const [favs, setFavs] = useState([]);
   const [postMore , setPostMore] = useState(0);
   
   
@@ -35,7 +36,30 @@ const CardContainer = () => {
       }
     };
     
+        
+    const fetchFavorites = async () =>{
+      try {
+          const responseFav = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/fav", {
+              method: "GET",
+              headers: {
+                  "Authorization": "Bearer " + localStorage.getItem('token') 
+              }
+          });
+          
+          if(responseFav.ok){
+              const dataFav = await responseFav.json();
+              setFavs(dataFav.favorites);
+          }
+          
+      } catch (error) {
+          console.error(error);
+      }
+    }
+  
+  
     fetchPosts();
+    fetchFavorites();
+
   }, [postMore]);
   
 
@@ -73,6 +97,7 @@ const CardContainer = () => {
                   <CardPost
                     post={p}
                     key={p._id}
+                    favs={favs}
                   />
                 )
               })

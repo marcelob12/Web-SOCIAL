@@ -1,15 +1,15 @@
 import React,{useState, useEffect, useRef} from 'react';
 import {AiFillHeart, AiFillStar} from 'react-icons/ai';
 import {BsCalendarDate} from 'react-icons/bs';
+import {BiHide} from 'react-icons/bi';
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
 import axios from 'axios'
-import MyFavorites from '../../Pages/MyFavorites/MyFavorites';
 
 
-const CardPost = ({post}) => {
+const CardPost = ({post, favs}) => {
     const [Like, setLike] = useState(null);
-    const [Fav, setFav] = useState(false);
+    const [Fav, setFav] = useState(null);
     const [likeNumber, setLikeNumber] = useState(post.likes.length);
     const [comments, setComments] = useState(post.comments)
     const user = JSON.parse(localStorage.getItem('user')).username;
@@ -25,25 +25,13 @@ const CardPost = ({post}) => {
             }
         });
 
-
-        const fetchFav = async ()=>{
-            try {
-                const response = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/fav", {
-                    method: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + localStorage.getItem('token') 
-                    }
-                });
         
-                const favs = await response.json();
-                console.log(favs);
-                                
-            } catch (error) {
-                console.error(error);
-            }    
-        }
-
-        fetchFav();
+        favs.forEach((f)=>{
+            if(f === post._id){
+                setFav(true);
+            }
+        });
+    
     }, []);
     
     
@@ -137,28 +125,6 @@ const CardPost = ({post}) => {
 
     //FAVORITES
     const onClickFav = async () =>{
-        if(Fav) {
-            setFav(false);
-        } else{
-            setFav(true);
-        }
-    }
-    
-    useEffect(() => {
-        const btn = document.querySelector(`[data-fid="${post._id}"]`);
-
-        if(Fav) {
-            btn.classList.add("text-yellow-700");
-            addToFav();
-        } else{
-            btn.classList.remove("text-yellow-700");
-        }
-        
-    }, [Fav])
-
-    
-    const addToFav = async ()=>{
-
         try {
             const response = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/fav/" + post._id , {
                 method: "PATCH",
@@ -166,17 +132,34 @@ const CardPost = ({post}) => {
                     "Authorization": "Bearer "+ localStorage.getItem('token')
                 }
             });
-
+            
             const info = await response.json();
-
+            
             console.log(info);
 
+            if(Fav){
+                setFav(false);
+            }else{
+                setFav(true);
+            }            
             
         } catch (error) {
             console.error(error);
         }
-
+        
     }
+    
+    useEffect(() => {
+        const btn = document.querySelector(`[data-fid="${post._id}"]`);
+        
+        if(Fav) {
+            btn.classList.add("text-yellow-700");
+        } else{
+            btn.classList.remove("text-yellow-700");
+        }
+        
+    }, [Fav])
+    
 
 
 

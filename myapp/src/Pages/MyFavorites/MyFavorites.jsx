@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react'
 import Navbar from '../../Components/Navbar/Navbar';
 import CardPost from '../../Components/CardPost/CardPost';
 import Swal from 'sweetalert2';
-// import {AiOutlineArrowLeft} from 'react-icons/ai';
-// import {AiOutlineArrowRight} from 'react-icons/ai';
 
 
 const MyFavorites = () => {
@@ -13,18 +11,18 @@ const MyFavorites = () => {
     const [postMore , setPostMore] = useState(0);
 
 
-    if(postMore < 0){
-        Swal.fire({
-          title: 'Parece que no hay posts por mostrar',
-          icon: 'warning',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Volver'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setPostMore(postMore + 1)
-          }
-        })
-    }
+    // if(postMore < 0){
+    //     Swal.fire({
+    //       title: 'Parece que no hay posts por mostrar',
+    //       icon: 'warning',
+    //       confirmButtonColor: '#3085d6',
+    //       confirmButtonText: 'Volver'
+    //     }).then((result) => {
+    //       if (result.isConfirmed) {
+    //         setPostMore(postMore + 1)
+    //       }
+    //     })
+    // }
 
     useEffect(() => {
         const fetchFavorites = async () =>{
@@ -100,13 +98,22 @@ const MyFavorites = () => {
         
                     {
                         post.map((p)=>{
-                            console.log(p);
-                            return(
-                                <CardPost
-                                    post={p}
-                                    key={p._id}
-                                />
-                            )
+                            let arrayFavs = [];
+                            arrayFavs.push(p._id);
+                            
+                            if(p){
+                                return(
+                                    <CardPost
+                                        post={p}
+                                        key={p._id}
+                                        favs={arrayFavs}
+                                    />
+                                )
+                            } else{
+                                return(
+                                    <h1>No hay posts</h1>
+                                )
+                            }
                         })    
                     }
                 
