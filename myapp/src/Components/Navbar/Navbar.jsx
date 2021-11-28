@@ -53,6 +53,16 @@ const Navbar = () => {
         e.preventDefault();
         navigate("/CreatePost");
     }
+
+    const onClickFav = (e) =>{
+        e.preventDefault();
+        navigate("/MyFavorites");
+    }
+    
+    const onClickPosts = (e) =>{
+        e.preventDefault();
+        navigate("/CardContainer");
+    }
         
     return ( 
         <div className="relative pt-1 bg-gradient-to-r from-aqua to-skyD">
@@ -74,8 +84,8 @@ const Navbar = () => {
 
                     }
                     
-                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <MdPublic /> Publicaciones</button>
-                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <AiOutlineStar /> Favoritos</button>
+                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onClick={onClickPosts}> <MdPublic /> Publicaciones</button>
+                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onClick={onClickFav}> <AiOutlineStar /> Favoritos</button>
                     <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onMouseEnter={dropdown.enter} onMouseLeave={dropdown.leave}> <img src={useravatar} className="w-8 h-8 rounded-full" alt="avatar-user"/> Usuario <AiFillCaretDown /></button>
                 </nav>
 

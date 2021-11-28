@@ -4,6 +4,7 @@ import {BsCalendarDate} from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
 import axios from 'axios'
+import MyFavorites from '../../Pages/MyFavorites/MyFavorites';
 
 
 const CardPost = ({post}) => {
@@ -25,6 +26,24 @@ const CardPost = ({post}) => {
         });
 
 
+        const fetchFav = async ()=>{
+            try {
+                const response = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/fav", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token') 
+                    }
+                });
+        
+                const favs = await response.json();
+                console.log(favs);
+                                
+            } catch (error) {
+                console.error(error);
+            }    
+        }
+
+        fetchFav();
     }, []);
     
     
@@ -72,25 +91,6 @@ const CardPost = ({post}) => {
 
     }, [Like])
 
-    const onClickFav = async () =>{
-        if(Fav) {
-            setFav(false);
-        } else{
-            setFav(true);
-        }
-    }
-
-    useEffect(() => {        
-        const btn=document.querySelector(`[data-fid="${post._id}"]`)
-
-        if(Fav) {
-            btn.classList.add("text-yellow-700");
-        } else{
-            btn.classList.remove("text-yellow-700");
-        }
-
-    }, [Fav])
-
 
     async function onSubmit(e) {
         e.preventDefault();
@@ -132,6 +132,52 @@ const CardPost = ({post}) => {
         }
 
     }
+
+
+
+    //FAVORITES
+    const onClickFav = async () =>{
+        if(Fav) {
+            setFav(false);
+        } else{
+            setFav(true);
+        }
+    }
+    
+    useEffect(() => {
+        const btn = document.querySelector(`[data-fid="${post._id}"]`);
+
+        if(Fav) {
+            btn.classList.add("text-yellow-700");
+            addToFav();
+        } else{
+            btn.classList.remove("text-yellow-700");
+        }
+        
+    }, [Fav])
+
+    
+    const addToFav = async ()=>{
+
+        try {
+            const response = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/fav/" + post._id , {
+                method: "PATCH",
+                headers: {
+                    "Authorization": "Bearer "+ localStorage.getItem('token')
+                }
+            });
+
+            const info = await response.json();
+
+            console.log(info);
+
+            
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
 
 
     return (
