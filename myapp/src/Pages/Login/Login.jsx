@@ -37,10 +37,10 @@ const Login = () => {
     return (
       <div className="flex items-center justify-center min-h-screen bg-dark-700">
         <main>
-          <div className="flex flex-row gap-10 p-10 m-6  rounded-xl">
-            <img className="pl-3 w-2/4 " src={userlogin} alt="login-img"/>
+          <div className="flex lg:flex-row gap-10 p-10 m-6  rounded-xl flex-col">
+            <img className="pl-3 w-2/4" src={userlogin} alt="login-img"/>
 
-            <form className="flex flex-col gap-10 p-10 bg-dark-400 w-96 rounded-3xl" onSubmit = { onSubmitHandler }>
+            <form className="flex flex-col gap-10 p-10 m-2 bg-dark-400 w-11/12 rounded-3xl" onSubmit = { onSubmitHandler }>
                 
                 <h1 className="font-bold self-center font-content text-5xl text-aqua">Log in </h1>
                 
