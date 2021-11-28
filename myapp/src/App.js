@@ -6,6 +6,7 @@ import RouteLogin  from './Components/RouteLogin/RouteLogin';
 import Redirect from './Pages/Redirect/Redirect';
 import CardContainer from './Components/CardContainer/CardContainer';
 import MyFavorites from './Pages/MyFavorites/MyFavorites';
+import MyPosts from './Pages/MyPosts/MyPosts'
 
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/CardContainer" element={<CardContainer />} />
         <Route path="/CreatePost" element={<CreatePost />} />
         <Route path='/MyFavorites' element={<MyFavorites />}/>
+        <Route path='/MyPosts' element={<MyPosts />}/>
 
 
 

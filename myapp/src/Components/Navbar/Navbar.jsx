@@ -1,7 +1,7 @@
 import React from 'react';
 import useravatar from '../../Assets/img/user_avatar.png';
 import { useUserContext } from '../../Contexts/UserContext';
-import { AiOutlineStar, AiFillCaretDown } from "react-icons/ai";
+import { AiOutlineStar, AiFillCaretDown, AiFillContacts } from "react-icons/ai";
 import { MdPublic } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import {MdOutlineAddComment} from 'react-icons/md';
@@ -58,11 +58,17 @@ const Navbar = () => {
         e.preventDefault();
         navigate("/MyFavorites");
     }
-    
+
     const onClickPosts = (e) =>{
         e.preventDefault();
         navigate("/CardContainer");
     }
+
+    const onClickMyPosts = (e) =>{
+        e.preventDefault();
+        navigate("/MyPosts");
+    }
+
         
     return ( 
         <div className="relative pt-1 bg-gradient-to-r from-aqua to-skyD">
@@ -75,7 +81,7 @@ const Navbar = () => {
                     </button>
                 </div>
 
-                <nav className="hidden h-full lg:w-2/5 lg:flex lg:justify-end font-content text-gray-500">
+                <nav className="hidden h-full lg:w-2/3 lg:flex lg:justify-end font-content text-gray-500">
                     {
                         role === "user"? 
                             <button onClick={addPost} className="hidden h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <MdOutlineAddComment /> Crear un post</button>
@@ -84,13 +90,13 @@ const Navbar = () => {
 
                     }
                     
-                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto"> <MdPublic /> Publicaciones</button>
+                    <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onClick={onClickPosts}> <MdPublic /> Publicaciones</button>
                     
                     {
                         role === "admin"? 
-                            <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onClick={onClickPosts}> <MdPublic /> Mis Posts</button>                
+                            <button className="flex items-center justify-center h-12 gap-3 hover:bg-dark-400 hover:text-white lg:w-1/4 lg:h-auto" onClick={onClickMyPosts}> <AiFillContacts /> Mis Posts</button>                
                         :
-                            <button className="hidden"> <MdPublic /> Mis Posts</button>
+                            <button className="hidden"> <AiFillContacts /> Mis Posts</button>
                     }
                     
                     
