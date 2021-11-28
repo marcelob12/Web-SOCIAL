@@ -1,16 +1,17 @@
 import React,{useState, useEffect, useRef} from 'react';
 import {AiFillHeart, AiFillStar} from 'react-icons/ai';
 import {BsCalendarDate,BsPencilSquare} from 'react-icons/bs';
+import {BiHide} from  'react-icons/bi'
 import Swal from 'sweetalert2';
 import Comment from '../Comment/Comment'
 import axios from 'axios'
-import UpdatePost from '../../Pages/UpdatePost/UpdatePost';
 import { useNavigate } from "react-router-dom";
 
 
 const CardPost = ({post, favs}) => {
     const navigate = useNavigate();
     const [Like, setLike] = useState(null);
+    const [Hide, setHide] = useState(null);
     const [Fav, setFav] = useState(null);
     const [likeNumber, setLikeNumber] = useState(post.likes.length);
     const [comments, setComments] = useState(post.comments)
@@ -69,7 +70,7 @@ const CardPost = ({post, favs}) => {
             console.error(error)
         }
     }
-
+    
     useEffect(() => {        
         const btn = document.querySelector(`[data-id="${post._id}"]`);
         
@@ -80,6 +81,47 @@ const CardPost = ({post, favs}) => {
         }
 
     }, [Like])
+
+    const onclickHide = async ()=>{
+        try {
+            const response = await fetch("https://posts-pw2021.herokuapp.com/api/v1/post/toggle/"+ post._id, {
+                    method: "PATCH",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }    
+                });    
+
+                const btn = document.querySelector(`[data-hide="${post._id}"]`);
+                if(Hide){
+                    setHide(false);
+                    btn.classList.remove("text-red-500");            
+
+                    
+                    
+                    
+                }else{
+                    setHide(true);
+                    btn.classList.add("text-red-500");            
+
+                }     
+            }        
+    catch (error) {
+        console.error(error)  
+    }    
+    }
+/*     useEffect(() => {
+        const btn = document.querySelector(`[data-hiden="${post._id}"]`);
+        
+        if(Hide) {
+            btn.classList.add("text-yellow-700");
+        } else{
+            btn.classList.remove("text-yellow-700");
+        }
+        
+    }, [Hide]) */
+
+
+    
 
 
     async function onSubmit(e) {
@@ -189,9 +231,18 @@ const CardPost = ({post, favs}) => {
                     
                     {
                         JSON.parse(localStorage.getItem("user")).username === post.user.username ? 
-                            <button className="flex items-center justify-center h-12 gap-3 hover:text-aqua lg:w-1/7 lg:h-auto" onClick={onClickUpdate} > <BsPencilSquare /></button>                
+                            <button className="flex items-center justify-center h-12 gap-3 hover:text-aqua lg:w-1/7 lg:h-auto" onClick={onClickUpdate} > <BsPencilSquare /></button>        
+                                    
                         :
                             <button className="hidden"> <BsPencilSquare /></button>
+                    }
+                    
+                    {
+                        JSON.parse(localStorage.getItem("user")).username === post.user.username ? 
+                            <button data-hiden={post._id} className="flex items-center justify-center h-12 gap-3 hover:text-red-500 lg:w-1/7 lg:h-auto" onClick={onclickHide}> <BiHide className="w-5 h-5"/></button>        
+                                    
+                        :
+                            <button className="hidden"> <BiHide /></button>
                     }
                 </div>
 
