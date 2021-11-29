@@ -8,6 +8,7 @@ import CardContainer from './Components/CardContainer/CardContainer';
 import MyFavorites from './Pages/MyFavorites/MyFavorites';
 import MyPosts from './Pages/MyPosts/MyPosts'
 import UpdatePost from './Pages/UpdatePost/UpdatePost';
+import ErrorPage from './Pages/ErrorPage/ErrorPage';
 
 
 
@@ -23,6 +24,7 @@ function App() {
         <Route path='/MyFavorites' element={<MyFavorites />}/>
         <Route path='/MyPosts' element={<MyPosts />}/>
         <Route path='/UpdatePost' element={<UpdatePost />}/>
+        <Route path='/ErrorPage' element={<ErrorPage />}/>
 
 
 
@@ -42,7 +44,12 @@ function App() {
             </RouteLogin>
           } />
 
-          </Routes>
+
+          <Route
+         path="/*"
+          element={
+          <ErrorPage/>} />
+      </Routes>
       </BrowserRouter>
     
   );

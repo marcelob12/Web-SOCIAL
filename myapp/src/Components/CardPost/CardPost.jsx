@@ -208,7 +208,11 @@ const CardPost = ({post, favs}) => {
     const onClickUpdate = (e) =>{
         e.preventDefault();
         navigate("/UpdatePost");
-        localStorage.setItem('post', JSON.stringify(post._id))
+        localStorage.setItem('post', JSON.stringify(post._id));
+        localStorage.setItem('title', JSON.stringify(post.title));
+        localStorage.setItem('description', JSON.stringify(post.description));
+        localStorage.setItem('image', JSON.stringify(post.image));
+
     }
 
     return (

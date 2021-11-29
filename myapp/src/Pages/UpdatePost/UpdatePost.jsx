@@ -12,43 +12,57 @@ const BASE_URL = "https://posts-pw2021.herokuapp.com/api/v1";
 
 
 const UpdatePost = () => {
-    const navigate = useNavigate();
-    const postId = JSON.parse(window.localStorage.getItem('post'));
+  const navigate = useNavigate();
+  const postId = JSON.parse(window.localStorage.getItem('post'));
+    
+    
     const title = useRef(null);
     const description = useRef(null);
     const image = useRef(null);
     
-    console.log(localStorage.getItem('post'))
+    
     
     async function onSubmit(e)
     {
       e.preventDefault();
-      const titleValue = title.current.value
-      const descriptionValue = description.current.value
-      const imageValue = image.current.value
-  
-      if (titleValue === "" || descriptionValue === "" || descriptionValue.lengh || imageValue === ""){
-        Swal.fire({
-          icon: 'error',
-          title: 'ERROR',
-          text: 'Por favor llenar todos los campos',
-        })
-      }
+      const titleValue = title.current.value;
+      const descriptionValue = description.current.value;
+      const imageValue = image.current.value;
       
+      const OriginalTitle = JSON.parse(window.localStorage.getItem('title'));
+      const OriginalDesc = JSON.parse(window.localStorage.getItem('description'));
+      const OriginalImage = JSON.parse(window.localStorage.getItem('image'));
+      
+       
+        if(titleValue === '')
+        {
+          title.current.value = OriginalTitle;
+        }
+        if(descriptionValue === '')
+        {
+          description.current.value = OriginalDesc;
+        }
+        
+        if(imageValue ==='')
+        {
+          image.current.value = OriginalImage;
+        }
+      
+       
+       
+       
+       
       //validacion para la descripcion del post sea mayor a 8 caracteres
-      else if (descriptionValue.length < 8) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'ERROR',
-          text: 'La descripcion del post debe ser mayor a 8 caracteres',
-        })
-      }
+       
       
-      try{
-        const response = await axios.put(`${BASE_URL}/post/update/${postId}`, {title: titleValue, description: descriptionValue, image: imageValue},
-        {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json'}}
-        );  
+       try{
+         const response = await axios.put(`${BASE_URL}/post/update/${postId}`, {title: titleValue, description: descriptionValue, image: imageValue},
+         {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`,
+         'Content-Type': 'application/json'}}
+         
+         );  
+         
+        
   
         Swal.fire({
           icon: 'success',
@@ -123,7 +137,7 @@ const UpdatePost = () => {
                       </div>
                       
                       <button className="w-full px-4 py-2 mt-6 text-xl text-white uppercase transition duration-300 ease-in-out border rounded bg-gradient-to-r from-aqua to-skyD text-bold hover:text-black">
-                          Publicar 
+                          Actualizar 
                       </button>
                   </form>
                 </div>

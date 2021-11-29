@@ -3,9 +3,12 @@ import { Navigate } from 'react-router-dom';
 
 const RouteLogin = ({role, children }) => {
   const { token, user } = useUserContext();
-  
-  if(!token) return <Navigate replace to="/login"/>;
-  if(!user || user.role !== role) return <Navigate replace to="/404"/>;
+  console.log(token);
+  if(!token) {
+    console.log("BUM");
+    return <Navigate replace to="/login"/>;
+  }
+  if(!user || user.role !== role) return <Navigate replace to="/ErrorPage"/>;
 
   return children;
 }

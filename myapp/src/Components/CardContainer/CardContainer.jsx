@@ -3,6 +3,9 @@ import CardPost from '../../Components/CardPost/CardPost';
 import Navbar from '../../Components/Navbar/Navbar';
 import Swal from 'sweetalert2';
 import {AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai';
+import { Navigate } from 'react-router';
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -12,7 +15,11 @@ const CardContainer = () => {
   const [favs, setFavs] = useState([]);
   const [postMore , setPostMore] = useState(0);
   const [PageLimit, setPageLimit] = useState(1);
+  const navigate = useNavigate();
+
   
+  
+
   
   
   useEffect(() => {

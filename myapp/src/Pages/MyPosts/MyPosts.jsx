@@ -13,6 +13,8 @@ const MyPosts = () => {
     const [post, setPost] = useState([]);
     const [favs, setFavs] = useState([]);
     const [postMore , setPostMore] = useState(0);
+    const [PageLimit, setPageLimit] = useState(1);
+
     
     useEffect(() => {
         const fetchPosts = async () =>{
@@ -24,9 +26,11 @@ const MyPosts = () => {
               }
             });
             
+            
             if(response.ok){
               const data = await response.json();
               setPost(data.data);
+              setPageLimit(data.pages);
             }
       
             
@@ -60,6 +64,20 @@ const MyPosts = () => {
         fetchFavorites();
     
       }, [postMore]);
+
+      if(postMore == PageLimit ){
+        Swal.fire({
+          title: 'Has llegado al final de los post',
+          icon: 'warning',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Volver'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setPostMore(postMore - 1)
+          }
+        })
+      } 
+      console.log(postMore, PageLimit);
 
       if(postMore < 0){
         Swal.fire({
