@@ -91,15 +91,19 @@ const MyFavorites = () => {
             
             <div className="flex justify-center">
                 <div className="w-11/12 mt-11">
-                    {/* <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row lg:justify-between mb-5">
-                        <button onClick={()=>{setPostMore(postMore - 1)}} className="flex justify-center items-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> <div>Página anterior</div> </button> 
-                        <button onClick={()=>{setPostMore(postMore + 1)}} className="flex justify-center items-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "> <div>Página siguiente</div> <AiOutlineArrowRight className="inline "/> </button>  
+                    {/* <div className="flex flex-col gap-3 mb-5 lg:gap-0 lg:flex-row lg:justify-between">
+                        <button onClick={()=>{setPostMore(postMore - 1)}} className="flex items-center justify-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> <div>Página anterior</div> </button> 
+                        <button onClick={()=>{setPostMore(postMore + 1)}} className="flex items-center justify-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "> <div>Página siguiente</div> <AiOutlineArrowRight className="inline "/> </button>  
                     </div> */}
         
                     {
                         post.map((p)=>{
                             let arrayFavs = [];
+                            if(fav._id === undefined){}
+                            else{
                             arrayFavs.push(p._id);
+                            }
+                            console.log(arrayFavs);
                             
                             if(p){
                                 return(
@@ -111,16 +115,13 @@ const MyFavorites = () => {
                                 )
                             } else{
                                 return(
-                                    <h1>No hay posts</h1>
+                                    <h1 className="mb-5 text-white">Este post se oculto...</h1>
                                 )
                             }
                         })    
                     }
                 
-                    {/* <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row lg:justify-between mb-10">
-                        <button onClick={()=>{setPostMore(postMore - 1)}} className="flex justify-center items-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "><AiOutlineArrowLeft className="inline "/> <div>Página anterior</div> </button> 
-                        <button onClick={()=>{setPostMore(postMore + 1)}} className="flex justify-center items-center px-4 py-1 mx-3 text-white transform bg-dark-700 x-2 hover:scale-105 hover:text-dark-700 hover:bg-white motion-reduce:transform-none rounded-2xl "> <div>Página siguiente</div> <AiOutlineArrowRight className="inline "/> </button>  
-                    </div> */}
+
         
                 </div>
             </div>
