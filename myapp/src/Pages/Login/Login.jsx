@@ -3,13 +3,12 @@ import { useUserContext } from "../../Contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import userlogin from "../../Assets/img/usuario.png";
 import { HiOutlineLogin } from "react-icons/hi";
+import Swal from "sweetalert2";
 
 const Login = () => {
     // Recibimos la función login y el token guardadas en UserContext
     const navigate = useNavigate();
-
     const { login, token } = useUserContext();
-
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [error, setError] = useState(false);
@@ -21,9 +20,17 @@ const Login = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-
         const logged = await login(Username, Password);
         setError(!logged);
+        
+        if(error){
+          Swal.fire({
+            title: 'Usuario o contraseña no validos',
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Volver'
+          })
+        }
         setUsername("");
         setPassword("");
     }
@@ -34,9 +41,12 @@ const Login = () => {
         }
     }, [token, navigate]);
 
+    
+
     return (
       <div className="flex items-center justify-center min-h-screen bg-dark-700">
         <main>
+          
           <div className="flex lg:flex-row gap-10 p-10 m-6  rounded-xl flex-col">
             <img className="pl-3 w-2/4" src={userlogin} alt="login-img"/>
 
